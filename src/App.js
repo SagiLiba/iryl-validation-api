@@ -1,24 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import './App.scss';
+import Form from "./components/Form";
+import {textOnly, numbersOnly, minimumLength} from "./validators";
 
 function App() {
+    const onFormChange = (formState) => {
+        console.log("Form State:",formState)
+    }
+    const formStory = {
+        inputs: [
+            {
+                // defaultValue: "Sagi", // TODO: fix this
+                label: "First Name:",
+                checkEmptyField: true,
+                emptyFieldErrorMessage: "Yo! fill it bro",
+                validators: [minimumLength(2),textOnly],
+            },
+            {
+                placeholder: "Age",
+                validators: [
+                    numbersOnly
+                ],
+                disabled: true
+            }
+        ]
+    }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <div className={"header"}>IRYL - Validation API</div>
+        <Form story={formStory} onSubmit={()=>console.log("Submit")} onFormChange={onFormChange} />
     </div>
   );
 }
